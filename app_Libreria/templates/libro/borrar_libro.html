@@ -1,0 +1,15 @@
+<!-- templates/libro/borrar_libro.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="soft-card p-4">
+    <h2>Confirmar borrado</h2>
+    <p>¿Eliminar el libro <strong>{{ libro.titulo }}</strong>?</p>
+    <form method="post">
+        {% csrf_token %}
+        <button class="btn btn-danger">Sí, borrar</button>
+        <a class="btn btn-secondary" href="{% url 'ver_libros' %}">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

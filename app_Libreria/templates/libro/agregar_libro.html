@@ -1,0 +1,79 @@
+<!-- templates/libro/agregar_libro.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="soft-card p-4">
+    <h2>Agregar Libro</h2>
+    
+    {% if error %}
+    <div class="alert alert-danger">
+        {{ error }}
+    </div>
+    {% endif %}
+    
+    <form method="post">
+        {% csrf_token %}
+        <div class="row">
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Título del libro</label>
+                    <input type="text" class="form-control" name="titulo" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">ISBN</label>
+                    <input type="text" class="form-control" name="isbn" maxlength="13" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Género</label>
+                    <select class="form-select" name="genero" required>
+                        <option value="">Seleccionar género...</option>
+                        {% for codigo, nombre in generos %}
+                            <option value="{{ codigo }}">{{ nombre }}</option>
+                        {% endfor %}
+                    </select>
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="mb-3">
+                    <label class="form-label">Fecha de publicación</label>
+                    <input type="date" class="form-control" name="fecha_publicacion" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Precio</label>
+                    <input type="number" step="0.01" class="form-control" name="precio" required>
+                </div>
+                <div class="mb-3">
+                    <label class="form-label">Stock</label>
+                    <input type="number" class="form-control" name="stock" required>
+                </div>
+            </div>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Descripción</label>
+            <textarea class="form-control" name="descripcion" rows="3"></textarea>
+        </div>
+        
+        <div class="mb-3">
+            <label class="form-label">Autores</label>
+            {% if autores %}
+                <select multiple class="form-select" name="autores" size="4">
+                    {% for autor in autores %}
+                        <option value="{{ autor.id }}">{{ autor.nombre }}</option>
+                    {% endfor %}
+                </select>
+                <small class="text-muted">Mantén presionado Ctrl para seleccionar múltiples autores</small>
+            {% else %}
+                <div class="alert alert-warning">
+                    No hay autores disponibles. 
+                    <a href="{% url 'agregar_autor' %}" class="alert-link">Agregar autores primero</a>
+                </div>
+            {% endif %}
+        </div>
+        
+        <button type="submit" class="btn btn-primary">Guardar</button>
+        <a href="{% url 'ver_libros' %}" class="btn btn-secondary">Cancelar</a>
+    </form>
+</div>
+{% endblock %}

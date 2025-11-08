@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Autores</h2>
+<table class="table">
+  <thead><tr><th>Nombre</th><th>Nacionalidad</th><th>Fecha Nac.</th><th>Activo</th><th>Acciones</th></tr></thead>
+  <tbody>
+    {% for autor in autores %}
+      <tr>
+        <td>{{ autor.nombre }}</td>
+        <td>{{ autor.nacionalidad }}</td>
+        <td>{{ autor.fecha_nacimiento }}</td>
+        <td>{{ autor.activo }}</td>
+        <td>
+          <a class="btn btn-sm btn-info" href="{% url 'actualizar_autor' autor.id %}">Editar</a>
+          <a class="btn btn-sm btn-danger" href="{% url 'borrar_autor' autor.id %}">Borrar</a>
+        </td>
+      </tr>
+    {% empty %}
+      <tr><td colspan="5">No hay autores registrados.</td></tr>
+    {% endfor %}
+  </tbody>
+</table>
+{% endblock %}

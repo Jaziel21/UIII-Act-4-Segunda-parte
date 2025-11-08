@@ -1,0 +1,55 @@
+<!-- templates/libro/ver_libros.html -->
+
+{% extends 'base.html' %}
+
+{% block content %}
+<div class="soft-card p-4">
+    <h2>Libros</h2>
+    
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Título</th>
+                <th>ISBN</th>
+                <th>Género</th>
+                <th>Precio</th>
+                <th>Stock</th>
+                <th>Autores</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for libro in libros %}
+            <tr>
+                <td>{{ libro.titulo }}</td>
+                <td>{{ libro.isbn }}</td>
+                <td>{{ libro.get_genero_display }}</td>
+                <td>${{ libro.precio }}</td>
+                <td>
+                    <span class="badge {% if libro.stock > 0 %}bg-success{% else %}bg-danger{% endif %}">
+                        {{ libro.stock }}
+                    </span>
+                </td>
+                <td>
+                    {% for autor in libro.autores.all %}
+                        <span class="badge bg-secondary">{{ autor.nombre }}</span>
+                    {% empty %}
+                        <span class="text-muted">Sin autores</span>
+                    {% endfor %}
+                </td>
+                <td>
+                    <a class="btn btn-sm btn-info" href="{% url 'actualizar_libro' libro.id %}">Editar</a>
+                    <a class="btn btn-sm btn-danger" href="{% url 'borrar_libro' libro.id %}">Borrar</a>
+                </td>
+            </tr>
+            {% empty %}
+            <tr>
+                <td colspan="7" class="text-center">No hay libros registrados.</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    
+    <a href="{% url 'agregar_libro' %}" class="btn btn-primary">Agregar Libro</a>
+</div>
+{% endblock %}

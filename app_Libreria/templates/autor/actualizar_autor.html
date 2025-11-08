@@ -1,0 +1,32 @@
+{% extends 'base.html' %}
+{% block content %}
+<h2>Actualizar Autor</h2>
+<form method="post" action="{% url 'realizar_actualizacion_autor' autor.id %}">
+  {% csrf_token %}
+  <div class="mb-3">
+    <label class="form-label">Nombre</label>
+    <input class="form-control" name="nombre" value="{{ autor.nombre }}">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Nacionalidad</label>
+    <input class="form-control" name="nacionalidad" value="{{ autor.nacionalidad }}">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Fecha de nacimiento</label>
+    <input class="form-control" type="date" name="fecha_nacimiento" value="{{ autor.fecha_nacimiento }}">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Fecha de fallecimiento</label>
+    <input class="form-control" type="date" name="fecha_fallecimiento" value="{{ autor.fecha_fallecimiento }}">
+  </div>
+  <div class="mb-3">
+    <label class="form-label">Biografía</label>
+    <textarea class="form-control" name="biografia">{{ autor.biografia }}</textarea>
+  </div>
+  <div class="mb-3 form-check">
+    <input type="checkbox" class="form-check-input" name="activo" id="activo" {% if autor.activo %}checked{% endif %}>
+    <label class="form-check-label" for="activo">Autor activo</label>
+  </div>
+  <button class="btn btn-success">Actualizar</button>
+</form>
+{% endblock %}
